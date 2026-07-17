@@ -1,0 +1,473 @@
+/* ============================================================
+   Scholarship Eligibility Desk — register-office ledger theme
+   ============================================================ */
+
+:root {
+  --paper:      #efe8d6;
+  --paper-card: #fbf7ec;
+  --ink:        #1f2a3c;
+  --ink-soft:   #4a5568;
+  --rule:       #c9bd9e;
+  --brass:      #a9822f;
+  --brass-dim:  #cbb173;
+  --seal-green: #34633f;
+  --seal-red:   #a3372f;
+  --shadow:     rgba(31, 42, 60, 0.14);
+
+  --font-display: 'Special Elite', 'Courier New', monospace;
+  --font-body:    'IBM Plex Sans', system-ui, sans-serif;
+  --font-mono:    'IBM Plex Mono', 'Courier New', monospace;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 20% 10%, rgba(255,255,255,0.4), transparent 45%),
+    var(--paper);
+  background-blend-mode: normal;
+  color: var(--ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  padding: clamp(16px, 4vw, 48px);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+/* subtle paper fiber texture without external images */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    repeating-linear-gradient(0deg, rgba(31,42,60,0.015) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(90deg, rgba(31,42,60,0.012) 0 1px, transparent 1px 3px);
+  z-index: 0;
+}
+
+.desk {
+  position: relative;
+  z-index: 1;
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+/* ---------------- header ---------------- */
+.desk-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 16px;
+  border-bottom: 3px double var(--ink);
+  padding-bottom: 14px;
+  margin-bottom: 28px;
+}
+
+.eyebrow {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--brass);
+  margin-bottom: 6px;
+}
+
+.desk-header h1 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(24px, 3.4vw, 34px);
+  margin: 0;
+  letter-spacing: 0.01em;
+}
+
+.header-right {
+  display: grid;
+  grid-template-columns: auto auto;
+  column-gap: 10px;
+  row-gap: 2px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  text-align: right;
+}
+
+.reg-label {
+  color: var(--ink-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 11px;
+  align-self: center;
+}
+
+.reg-value {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+/* ---------------- layout ---------------- */
+.desk-body {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  gap: 28px;
+  align-items: start;
+}
+
+@media (max-width: 800px) {
+  .desk-body { grid-template-columns: 1fr; }
+}
+
+h2 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 19px;
+  margin: 0 0 4px;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.section-index {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: #fff;
+  background: var(--ink);
+  padding: 1px 7px;
+  border-radius: 2px;
+}
+
+.section-note {
+  margin: 0 0 18px;
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+/* ---------------- intake form ---------------- */
+.intake {
+  background: var(--paper-card);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  padding: 24px clamp(18px, 3vw, 30px) 28px;
+  box-shadow: 0 1px 0 var(--rule), 0 10px 24px -18px var(--shadow);
+}
+
+.field { margin-bottom: 18px; }
+.field-row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 0;
+}
+.field-row .field { flex: 1; margin-bottom: 18px; }
+.field-small { flex: 0 0 90px; }
+.field-grow { flex: 1; }
+
+label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+  margin-bottom: 6px;
+}
+
+.hint {
+  text-transform: none;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--brass);
+}
+
+input[type="text"],
+input[type="number"],
+select {
+  width: 100%;
+  font-family: var(--font-mono);
+  font-size: 15px;
+  color: var(--ink);
+  background: transparent;
+  border: none;
+  border-bottom: 1.5px dashed var(--ink-soft);
+  padding: 6px 2px 8px;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+select {
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, var(--ink-soft) 50%),
+                     linear-gradient(135deg, var(--ink-soft) 50%, transparent 50%);
+  background-position: calc(100% - 12px) 14px, calc(100% - 6px) 14px;
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+input:focus, select:focus {
+  border-bottom-color: var(--brass);
+  border-bottom-style: solid;
+}
+
+/* gender pills */
+.pill-group {
+  display: flex;
+  gap: 8px;
+}
+.pill-group input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0; height: 0;
+}
+.pill {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  padding: 7px 14px;
+  border: 1.5px solid var(--ink-soft);
+  border-radius: 999px;
+  cursor: pointer;
+  color: var(--ink-soft);
+  transition: all 0.15s ease;
+}
+.pill-group input[type="radio"]:checked + .pill {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper-card);
+}
+.pill-group input[type="radio"]:focus-visible + .pill {
+  outline: 2px solid var(--brass);
+  outline-offset: 2px;
+}
+
+/* buttons */
+.stamp-btn {
+  margin-top: 8px;
+  width: 100%;
+  font-family: var(--font-display);
+  font-size: 16px;
+  letter-spacing: 0.03em;
+  color: var(--paper-card);
+  background: var(--ink);
+  border: none;
+  border-radius: 3px;
+  padding: 13px 20px;
+  cursor: pointer;
+  transition: transform 0.12s ease, background 0.15s ease;
+}
+.stamp-btn:hover { background: #2c3b56; }
+.stamp-btn:active { transform: scale(0.98); }
+.stamp-btn:focus-visible { outline: 2px solid var(--brass); outline-offset: 3px; }
+
+.reset-btn {
+  display: block;
+  margin: 10px auto 0;
+  background: none;
+  border: none;
+  font-family: var(--font-body);
+  font-size: 12.5px;
+  color: var(--ink-soft);
+  text-decoration: underline;
+  cursor: pointer;
+}
+.reset-btn:hover { color: var(--ink); }
+
+/* ---------------- record card ---------------- */
+.card-wrap { position: sticky; top: 24px; }
+
+.record-card {
+  position: relative;
+  background: var(--paper-card);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 22px 22px 26px;
+  box-shadow: 0 14px 30px -18px var(--shadow), 0 1px 0 var(--rule);
+  min-height: 340px;
+  overflow: hidden;
+}
+
+.record-card::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 34px;
+  background: repeating-linear-gradient(
+    180deg, var(--brass-dim) 0 2px, transparent 2px 14px
+  );
+  opacity: 0.5;
+}
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 32px;
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 10px;
+  margin-bottom: 14px;
+}
+
+.card-kicker {
+  font-family: var(--font-display);
+  font-size: 13px;
+  letter-spacing: 0.05em;
+  color: var(--ink-soft);
+}
+
+.card-serial {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--brass);
+}
+
+.card-grid {
+  padding-left: 32px;
+  margin: 0 0 20px;
+  display: grid;
+  gap: 12px;
+}
+
+.card-grid dt {
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--ink-soft);
+  margin-bottom: 2px;
+}
+
+.card-grid dd {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 15px;
+  color: var(--ink);
+}
+
+.stamp-zone {
+  position: relative;
+  padding-left: 32px;
+  height: 128px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top: 1px dashed var(--rule);
+  padding-top: 16px;
+}
+
+.stamp-placeholder {
+  font-size: 12.5px;
+  color: var(--ink-soft);
+  font-style: italic;
+  margin: 0;
+}
+
+.stamp {
+  font-family: var(--font-display);
+  font-size: clamp(20px, 3.4vw, 26px);
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  padding: 10px 18px;
+  border: 3px solid currentColor;
+  border-radius: 6px;
+  opacity: 0;
+  transform: scale(1.9) rotate(-8deg);
+  transition: opacity 0.18s ease-out, transform 0.28s cubic-bezier(.2,1.4,.4,1);
+  text-transform: uppercase;
+  position: relative;
+}
+
+.stamp::after {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border: 1px solid currentColor;
+  border-radius: 9px;
+  opacity: 0.5;
+}
+
+.stamp-show {
+  opacity: 0.88;
+  transform: scale(1) rotate(-8deg);
+}
+
+.stamp-eligible { color: var(--seal-green); }
+.stamp-not { color: var(--seal-red); }
+
+.card-caption {
+  text-align: center;
+  font-size: 11.5px;
+  color: var(--ink-soft);
+  margin-top: 10px;
+}
+
+/* ---------------- footnote / model table ---------------- */
+.ledger-footnote {
+  margin-top: 40px;
+  padding-top: 18px;
+  border-top: 3px double var(--ink);
+}
+
+.footnote-note {
+  font-size: 12px;
+  font-weight: 400;
+  font-family: var(--font-body);
+  color: var(--ink-soft);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 14px 0 10px;
+  font-size: 13.5px;
+}
+
+thead th {
+  text-align: left;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--ink);
+}
+
+tbody td {
+  padding: 7px 6px;
+  border-bottom: 1px solid var(--rule);
+  font-family: var(--font-mono);
+}
+
+tbody td:first-child { font-family: var(--font-body); }
+
+.bar {
+  display: block;
+  height: 6px;
+  width: 100%;
+  background: var(--rule);
+  border-radius: 3px;
+  position: relative;
+  overflow: hidden;
+}
+.bar::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: var(--v, 0%);
+  background: var(--brass);
+}
+
+.footnote-small {
+  font-size: 11.5px;
+  color: var(--ink-soft);
+  margin: 6px 0 0;
+}
+
+/* reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .stamp { transition: opacity 0.01s linear; transform: scale(1) rotate(-8deg); }
+}
